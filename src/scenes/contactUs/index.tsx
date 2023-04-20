@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { SelectedPage } from "@/shared/types";
+import {SelectedPage, ServiceType} from "@/shared/types";
 import { motion } from "framer-motion";
 import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
+import useServices from "@/hooks/useServices";
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -11,6 +12,8 @@ type Props = {
 const ContactUs = ({ setSelectedPage }: Props) => {
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
   px-5 py-3 placeholder-white`;
+
+  const services = useServices("https://643145c5d4518cfb0e5de06b.mockapi.io/Services")
 
   const {
     register,
@@ -66,7 +69,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
             <form
               target="_blank"
               onSubmit={onSubmit}
-              action="https://formsubmit.co/e8a5bdfa807605332f809e5656e27c6e"
+              action="https://643145c5d4518cfb0e5de06b.mockapi.io/Patients"
               method="POST"
             >
               <input
@@ -103,20 +106,13 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                 </p>
               )}
 
-                <select
+                <select {...register("specialization")}
                     className={inputStyles}
                 >
                     <option disabled selected hidden>Выбрать специализацию:</option>
-                    <option>Аллергология</option>
-                    <option>Гастроэнтерология</option>
-                    <option>Дерматология</option>
-                    <option>Диагностика</option>
-                    <option>Кардиология</option>
-                    <option>Неврология</option>
-                    <option>Психология</option>
-                    <option>Ревматология</option>
-                    <option>Сомнология</option>
-                    <option>Эндокринология</option>
+                    {services.repos.map((item: ServiceType) => (
+                        <option value={item.name}>{item.name}</option>
+                    ))}
                 </select>
 
               <input
