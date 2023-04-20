@@ -1,62 +1,17 @@
 import { SelectedPage, ServiceType } from "@/shared/types";
-import image1 from "@/assets/image1.png";
-import image2 from "@/assets/image2.png";
-import image3 from "@/assets/image3.png";
-import image4 from "@/assets/image4.png";
-import image5 from "@/assets/image5.png";
-import image6 from "@/assets/image6.png";
 import { motion } from "framer-motion";
 import HText from "@/shared/HText";
 import Service from "./Service";
+import useServices from "@/hooks/useServices";
 
-const services: Array<ServiceType> = [
-  {
-    name: "Аллергология",
-    image: image1,
-  },
-  {
-    name: "Гастроэнтерология",
-    image: image2,
-  },
-  {
-    name: "Дерматология",
-    image: image3,
-  },
-  {
-    name: "Диагностика",
-    image: image4,
-  },
-  {
-    name: "Кардиология",
-    image: image5,
-  },
-  {
-    name: "Неврология",
-    image: image6,
-  },
-  {
-    name: "Психология",
-    image: image6,
-  },
-  {
-    name: "Ревматология",
-    image: image6,
-  },
-  {
-    name: "Сомнология",
-    image: image6,
-  },
-  {
-    name: "Эндокринология",
-    image: image6,
-  },
-];
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
 
 const OurServices = ({ setSelectedPage }: Props) => {
+  const services = useServices("https://643145c5d4518cfb0e5de06b.mockapi.io/Services")
+
   return (
     <section id="ourclasses" className="w-full bg-primary-100 py-40">
       <motion.div
@@ -84,7 +39,7 @@ const OurServices = ({ setSelectedPage }: Props) => {
         </motion.div>
         <div className="mt-10 h-[353px] w-full overflow-x-auto overflow-y-hidden">
           <ul className="w-[2800px] whitespace-nowrap">
-            {services.map((item: ServiceType, index) => (
+            {services.repos.map((item: ServiceType, index) => (
               <Service
                 key={`${item.name}-${index}`}
                 name={item.name}
