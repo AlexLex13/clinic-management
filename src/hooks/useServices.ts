@@ -10,6 +10,7 @@ const useServices = (apiUrl: string) => {
     });
 
     useEffect(() => {
+        setServices({ loading: true, repos: Array<ServiceType>() });
         axios.get(apiUrl).then((repos) => {
             const allRepos = repos.data;
             setServices({ loading: false, repos: allRepos });
