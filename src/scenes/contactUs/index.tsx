@@ -6,9 +6,6 @@ import HText from "@/shared/HText";
 import useServices from "@/hooks/useServices";
 import ReCAPTCHA  from "react-google-recaptcha";
 import {useState} from "react";
-import endpoint from '../../../endpoints.config';
-
-require('dotenv').config()
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -140,7 +137,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
               />
 
               <ReCAPTCHA
-                  sitekey={endpoint.siteKey}
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                   onChange={onChange}
               />
 
