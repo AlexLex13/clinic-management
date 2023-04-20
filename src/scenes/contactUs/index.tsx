@@ -4,12 +4,25 @@ import { motion } from "framer-motion";
 import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
 import useServices from "@/hooks/useServices";
+import ReCAPTCHA  from "react-google-recaptcha";
+import {useState} from "react";
+import endpoint from '../../../endpoints.config';
+
+require('dotenv').config()
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
 
 const ContactUs = ({ setSelectedPage }: Props) => {
+
+  const [isCaptchaSuccessful, setIsCaptchaSuccess] = useState(false)
+
+  function onChange(value: string | null) {
+    setIsCaptchaSuccess(true)
+    console.log("captcha value: ", value);
+  }
+
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
   px-5 py-3 placeholder-white`;
 
@@ -28,6 +41,9 @@ const ContactUs = ({ setSelectedPage }: Props) => {
     }
   };
 
+  // @ts-ignore
+  // @ts-ignore
+  // @ts-ignore
   return (
     <section id="contactus" className="mx-auto w-5/6 pt-24 pb-32">
       <motion.div
@@ -123,9 +139,15 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                 })}
               />
 
+              <ReCAPTCHA
+                  sitekey={endpoint.siteKey}
+                  onChange={onChange}
+              />
+
               <button
                 type="submit"
                 className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+                disabled={!isCaptchaSuccessful}
               >
                 Записаться
               </button>
